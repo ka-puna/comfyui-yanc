@@ -18,6 +18,7 @@ dir = os.path.dirname(__file__)
 dir = os.path.join(dir, "nodes")
 dir = os.path.abspath(dir)
 files = glob.glob(os.path.join(dir, "*.py"), recursive=False)
+files = sorted(files)
 
 for file in files:
     # Import the module associated with the file.
