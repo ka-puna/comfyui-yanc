@@ -24,7 +24,7 @@ class FormatDatetimeString:
                     "multiline": False,
                     "default": "%Y-%m-%d",
                 }),
-            }
+            },
         }
     
     RETURN_TYPES = ("STRING",)
