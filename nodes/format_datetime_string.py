@@ -30,8 +30,12 @@ class FormatDatetimeString:
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("STRING",)
     FUNCTION = "get_datetime_string"
-
+    OUTPUT_NODE = True
     CATEGORY = "utils"
+
+    @classmethod
+    def IS_CHANGED(s, **kwargs):
+        return float("NaN")
 
     def get_datetime_string(self, string_format):
         now = datetime.now()
