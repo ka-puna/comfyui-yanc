@@ -1,5 +1,5 @@
 """
-This node shortens a string by word, thken appends a trailing character to the
+This node shortens a string by word, then appends a trailing character to the
         when it is shortened.
         See: https://docs.python.org/3/library/textwrap.html#textwrap.shorten.
 Depends On:
@@ -8,7 +8,7 @@ Input:
     string
     length: The maximum character length of the string.
     trail: The string suffixed to the output string when it is truncated.
-Ouput:
+Output:
     STRING: A copy of 'string' shortened by word to 'length', using 'trail'
             to suffix a shortened string.
 """
