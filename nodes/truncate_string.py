@@ -24,7 +24,7 @@ class TruncateString:
         return {
             "required": {
                 "string": ("STRING", { "forceInput": True,}),
-                "length": ("INT", { "default": 48,}),
+                "length": ("INT", { "default": 48, "min": 0}),
                 "trail": ("STRING", { "default": "...",}),
             },
         }
