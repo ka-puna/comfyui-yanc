@@ -25,8 +25,7 @@ import folder_paths
 
 class SaveImageWEBP:
     def __init__(self):
-        self.output_dir = folder_paths.get_output_directory()
-        self.prefix_append = ""
+        pass
 
     @classmethod
     def INPUT_TYPES(s):
