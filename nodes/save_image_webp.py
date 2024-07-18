@@ -1,7 +1,7 @@
 """
 This node saves images in the WEBP format. It includes options for file name, location, and quality.
 Depends On:
-    json, numpy, os, PIL, comfy, folder_paths
+    json, random, numpy, os, PIL, random, comfy, folder_paths
 Input:
     images: A batch of images.
     output_type: The output type selects which base directory is used.
@@ -17,6 +17,7 @@ import json
 import numpy as np
 import os
 from PIL import Image
+import random
 
 from comfy.cli_args import args
 import folder_paths
@@ -59,6 +60,11 @@ class SaveImageWEBP:
             i = 255. * image.cpu().numpy()
             img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
 
+            filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
+            file = f"{filename_with_batch_num}_{counter:05}.webp"
+            while os.path.exists(os.path.join(full_output_folder, file)):
+                file = f"{filename_with_batch_num}_{counter:05}_%s.webp" % ''.join(random.choice("abcdefghijklmnopqrstupvxyz") for x in range(5))
+
             if not args.disable_metadata:
                 exif = img.getexif()
                 if prompt is not None:
@@ -69,8 +75,6 @@ class SaveImageWEBP:
                     exif[0x010e] = "Workflow:" + json.dumps(extra_pnginfo["workflow"])
                 kwargs["exif"] = exif.tobytes()
 
-            filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
-            file = f"{filename_with_batch_num}_{counter:05}.webp"
             img.save(os.path.join(full_output_folder, file), **kwargs)
             results.append({
                 "filename": file,
