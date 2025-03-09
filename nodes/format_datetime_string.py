@@ -9,7 +9,7 @@ Input:
 Output:
     STRING: A copy of 'string_format' with replacements from datetime.datetime.
 """
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class FormatDatetimeString:
@@ -35,7 +35,7 @@ class FormatDatetimeString:
 
     @classmethod
     def IS_CHANGED(s, string_format):
-        now_standard = datetime.now(datetime.timezone.utc).isoformat()
+        now_standard = datetime.now(timezone.utc).isoformat()
         return [string_format, now_standard]
 
     def get_datetime_string(self, string_format):
