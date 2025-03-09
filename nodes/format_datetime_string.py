@@ -34,8 +34,9 @@ class FormatDatetimeString:
     CATEGORY = "utils"
 
     @classmethod
-    def IS_CHANGED(s, **kwargs):
-        return float("NaN")
+    def IS_CHANGED(s, string_format):
+        now_standard = datetime.now(datetime.timezone.utc).isoformat()
+        return [string_format, now_standard]
 
     def get_datetime_string(self, string_format):
         now = datetime.now()
