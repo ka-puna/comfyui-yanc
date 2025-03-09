@@ -50,12 +50,10 @@ class GetWidgetValueString:
         # Get node id.
         node_id = None
         for node in workflow["nodes"]:
-            name = node["type"]
-            if "properties" in node:
-                if "Node name for S&R" in node["properties"]:
-                    name = node["properties"]["Node name for S&R"]
-                if name == node_name_for_sr:
+            if "properties" in node and "Node name for S&R" in node["properties"]:
+                if node["properties"]["Node name for S&R"] == node_name_for_sr:
                     node_id = node["id"]
+                    break
         # Get widget value string from node.
         string = "%unknown_error%"
         if node_id is not None:
