@@ -50,6 +50,12 @@ class SaveImageWEBP:
         kwargs = dict()
         output_dir = folder_paths.get_output_directory() if output_type == "output" else folder_paths.get_temp_directory()
         full_output_folder, filename, counter, subfolder = folder_paths.get_save_image_path(filename_prefix, output_dir, images[0].shape[1], images[0].shape[0])[0:4]
+        # Mapping of common illegal filename characters to '_' (by ascii code).
+        # ':', ';', '*', '?', '!', '$', '#', '%', '&', '<', '>', '@', '+', '`', '=', '|', '\'', '\"', '\\', '/', '\{', '\}', '\n'
+        FILENAME_LEGALIZE = dict.fromkeys(
+                [58, 59, 42, 63, 33, 36, 35, 37, 38, 60, 62, 64, 43, 60, 61, 124, 39, 34, 
+                92, 47, 123, 125, 10],
+                95)
 
         # Save batch arguments.
         kwargs["lossless"] = lossless
@@ -61,8 +67,11 @@ class SaveImageWEBP:
 
             filename_with_batch_num = filename.replace("%batch_num%", str(batch_number))
             file = f"{filename_with_batch_num}_{counter:05}.webp"
+            file = file.translate(FILENAME_LEGALIZE)
+
             while os.path.exists(os.path.join(full_output_folder, file)):
                 file = f"{filename_with_batch_num}_{counter:05}_%s.webp" % ''.join(random.choice("abcdefghijklmnopqrstupvxyz") for x in range(5))
+                file = file.translate(FILENAME_LEGALIZE)
 
             if not args.disable_metadata:
                 exif = img.getexif()
