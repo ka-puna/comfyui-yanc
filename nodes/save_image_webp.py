@@ -58,7 +58,6 @@ class SaveImageWEBP:
                 95)
 
         # Save batch arguments.
-        kwargs["lossless"] = lossless
         kwargs["quality"] = quality
 
         for (batch_number, image) in enumerate(images):
@@ -83,7 +82,7 @@ class SaveImageWEBP:
                     exif[0x010e] = "Workflow:" + json.dumps(extra_pnginfo["workflow"])
                 kwargs["exif"] = exif.tobytes()
 
-            img.save(os.path.join(full_output_folder, file), **kwargs)
+            img.save(os.path.join(full_output_folder, file), **kwargs, lossless=lossless)
             results.append({
                 "filename": file,
                 "subfolder": subfolder,
